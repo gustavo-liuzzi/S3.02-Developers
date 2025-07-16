@@ -24,12 +24,22 @@ class Usuario extends Model
                 return $usuario;
             }
         }
-        return null; 
+        return null;
     }
 
-    public function guardarUsuario($data): int
+    /* añado función para comprobar si el usuario (email) ya existe
+    pero no funciona, a pesar de ser llamada desde UsuarioController
+    correctamente, a investigar por qué */
+
+    public function guardarUsuario(array $data): int
     {
         $usuarios = $this->jsonHandler->leer();
+
+        foreach ($usuarios as $usuario) {
+            if (isset($usuario['email']) && strtolower($usuario['email']) === strtolower($data['email'])) {
+                throw new Exception("Error: El usuario ya existe");
+            }
+        }
 
         if (count($usuarios) > 0) {
             $ultimoId = end($usuarios)['id'];
