@@ -14,4 +14,7 @@ $routes = array(
 	'/modules' => 'modules#mentorView',
 	'/test' => 'test#index',
 	'/guardaralumno' => 'usuario#crear',
+	'/eliminaralumnos' => 'usuario#eliminarvarios',
+	'/modificaralumnos' => 'usuario#editarvarios',
+	'/guardaractualizaciones' => 'usuario#actualizarvarios'
 );
