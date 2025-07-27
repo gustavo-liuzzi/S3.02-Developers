@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editar Tarea</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 min-h-screen py-8">
+    <div class="max-w-2xl mx-auto px-4">
+        
+        <?php 
+        require_once __DIR__ . '/../../../models/Task.php';
+        $id_tarea = $_GET['id'] ?? null;
+        $task = $id_tarea ? Task::findById($id_tarea) : null;
+        ?>
+
+        <div class="mb-6">
+            <h1 class="text-3xl font-bold text-gray-800">Editar Tarea</h1>
+            <a href="/tasks" class="text-blue-600">← Volver</a>
+        </div>
+
+        <?php if (isset($error)): ?>
+            <div class="bg-red-100 text-red-700 p-3 rounded mb-4">
+                <?= htmlspecialchars($error) ?>
+            </div>
+        <?php endif; ?>
+
+        <?php if ($task): ?>
+            <div class="bg-white rounded shadow p-6">
+                <form method="POST" action="/tasks/edit?id=<?= $task->id_tarea ?>">
+                    
+                    <input type="hidden" name="id_tarea" value="<?= $task->id_tarea ?>">
+                    
+                    <div class="mb-4">
+                        <label class="block text-gray-700 mb-2">Título</label>
+                        <input type="text" name="titulo" value="<?= htmlspecialchars($task->titulo) ?>" class="w-full px-3 py-2 border rounded" required>
+                    </div>
+
+                    <div class="mb-4">
+                        <label class="block text-gray-700 mb-2">Descripción</label>
+                        <textarea name="descripcion" rows="3" class="w-full px-3 py-2 border rounded"><?= htmlspecialchars($task->descripcion) ?></textarea>
+                    </div>
+
+                    <div class="mb-4">
+                        <label class="block text-gray-700 mb-2">Estado</label>
+                        <select name="estado" class="w-full px-3 py-2 border rounded">
+                            <option value="pendiente" <?= $task->estado->value === 'pendiente' ? 'selected' : '' ?>>Pendiente</option>
+                            <option value="en ejecucion" <?= $task->estado->value === 'en ejecucion' ? 'selected' : '' ?>>En Ejecución</option>
+                            <option value="completada" <?= $task->estado->value === 'completada' ? 'selected' : '' ?>>Completada</option>
+                        </select>
+                    </div>
+
+                    <div class="mb-4">
+                        <label class="block text-gray-700 mb-2">Usuario</label>
+                        <select name="usuario_id" class="w-full px-3 py-2 border rounded">
+                            <option value="1" <?= $task->usuario_id == 1 ? 'selected' : '' ?>>Usuario #1</option>
+                            <option value="2" <?= $task->usuario_id == 2 ? 'selected' : '' ?>>Usuario #2</option>
+                            <option value="3" <?= $task->usuario_id == 3 ? 'selected' : '' ?>>Usuario #3</option>
+                        </select>
+                    </div>
+
+                    <!-- ✅ CAMPOS DE FECHA AÑADIDOS -->
+                    <div class="mb-4">
+                        <label class="block text-gray-700 mb-2">Fecha inicio</label>
+                        <input type="datetime-local" 
+                               name="fecha_inicio"
+                               value="<?= $task->fecha_inicio ? date('Y-m-d\TH:i', strtotime($task->fecha_inicio)) : '' ?>"
+                               class="w-full px-3 py-2 border rounded">
+                    </div>
+
+                    <div class="mb-4">
+                        <label class="block text-gray-700 mb-2">Fecha límite</label>
+                        <input type="datetime-local" 
+                               name="fecha_fin"
+                               value="<?= $task->fecha_fin ? date('Y-m-d\TH:i', strtotime($task->fecha_fin)) : '' ?>"
+                               class="w-full px-3 py-2 border rounded">
+                    </div>
+
+                    <div class="flex justify-end space-x-3">
+                        <a href="/tasks" class="px-4 py-2 text-gray-600 border rounded hover:bg-gray-50">Cancelar</a>
+                        <button type="submit" class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">Guardar</button>
+                    </div>
+                </form>
+            </div>
+        <?php else: ?>
+            <div class="bg-red-100 text-red-700 p-6 rounded">
+                <h3 class="font-bold mb-2">Error: Tarea no encontrada</h3>
+                <p>No se pudo cargar la tarea para editar.</p>
+                <a href="/tasks" class="text-blue-600 underline">← Volver al listado</a>
+            </div>
+        <?php endif; ?>
+    </div>
+</body>
+</html>
