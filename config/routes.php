@@ -10,6 +10,13 @@
  * '/calendar' => 'calendar#index'
  */
 $routes = array(
+	'/test' => 'test#index',
+	//Rutas para gestion de tareas (TaskController)
+	'/tasks' => 'task#index',
+	'/tasks/create' => 'task#create',
+	'/tasks/show' => 'task#show',
+	'/tasks/edit' => 'task#edit',
+	'/tasks/delete' => 'task#delete',
 	'/' => 'home#welcome',
 	'/modules' => 'modules#mentorView',
 	'/test' => 'test#index',
