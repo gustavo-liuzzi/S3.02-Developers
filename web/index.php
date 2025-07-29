@@ -2,6 +2,8 @@
 
 error_reporting(E_ALL|E_STRICT);
 ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
 date_default_timezone_set('CET');
 
 // defines the web root
@@ -22,23 +24,26 @@ include(ROOT_PATH . '/config/routes.php');
  * @param string $className
  */
 function autoloader($className) {
-	// controller autoloading
-	if (strlen($className) > 10 && substr($className, -10) == 'Controller') {
-		if (file_exists(ROOT_PATH . '/app/controllers/' . $className . '.php') == 1) {
-			require_once ROOT_PATH . '/app/controllers/' . $className . '.php';
-		}
-	}
-	else {
-		if (file_exists(CMS_PATH . $className . '.php')) {
-			require_once CMS_PATH . $className . '.php';
-		}
-		else if (file_exists(ROOT_PATH . '/lib/' . $className . '.php')) {
-			require_once ROOT_PATH . '/lib/' . $className . '.php';
-		}
-		else {
-			require_once ROOT_PATH . '/app/models/'.$className.'.php';
-		}
-	}
+    if (strlen($className) > 10 && substr($className, -10) == 'Controller') {
+        if (file_exists(ROOT_PATH . '/app/controllers/' . $className . '.php')) {
+            require_once ROOT_PATH . '/app/controllers/' . $className . '.php';
+        }
+    } else {
+        if (file_exists(CMS_PATH . $className . '.php')) {
+            require_once CMS_PATH . $className . '.php';
+        }
+        // Busca en lib/
+        else if (file_exists(ROOT_PATH . '/lib/' . $className . '.php')) {
+            require_once ROOT_PATH . '/lib/' . $className . '.php';
+        }
+        // Busca también en lib/utils/
+        else if (file_exists(ROOT_PATH . '/lib/utils/' . $className . '.php')) {
+            require_once ROOT_PATH . '/lib/utils/' . $className . '.php';
+        }
+        else {
+            require_once ROOT_PATH . '/app/models/' . $className . '.php';
+        }
+    }
 }
 
 // activates the autoloader
