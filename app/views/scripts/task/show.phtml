@@ -1,17 +1,18 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width,initial-scale=1.0">
   <title>Detalle de Tarea</title>
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
+
 <body class="bg-gray-100 min-h-screen py-8">
   <div class="max-w-4xl mx-auto px-4">
     <?php
-      require_once __DIR__ . '/../../../models/Task.php';
-      $id_tarea = $_GET['id'] ?? null;
-      $task = $id_tarea ? Task::findById($id_tarea) : null;
+    $id_tarea = $_GET['id'] ?? null;
+    $task = $id_tarea ? Task::findById($id_tarea) : null;
     ?>
 
     <?php if ($task): ?>
@@ -22,18 +23,18 @@
         <p class="mb-2">
           <strong>Estado:</strong>
           <?php
-            $colors = [
-              'pendiente'     => 'bg-yellow-200 text-yellow-800',
-              'en ejecucion'  => 'bg-blue-200 text-blue-800',
-              'completada'    => 'bg-green-200 text-green-800'
-            ];
-            $cls = $colors[$task->estado->value] ?? 'bg-gray-200 text-gray-800';
+          $colors = [
+            'pendiente'     => 'bg-yellow-200 text-yellow-800',
+            'en ejecucion'  => 'bg-blue-200 text-blue-800',
+            'completada'    => 'bg-green-200 text-green-800'
+          ];
+          $cls = $colors[$task->estado->value] ?? 'bg-gray-200 text-gray-800';
           ?>
           <span class="px-2 py-1 rounded text-sm <?= $cls ?>">
-            <?= ucfirst(str_replace('_',' ',$task->estado->value)) ?>
+            <?= ucfirst(str_replace('_', ' ', $task->estado->value)) ?>
           </span>
         </p>
-        
+
         <!-- ✅ FECHAS CORREGIDAS CON DEBUG -->
         <p class="mb-2"><strong>Fecha inicio:</strong>
           <?php if ($task->fecha_inicio && $task->fecha_inicio !== ''): ?>
@@ -42,7 +43,7 @@
             <span class="text-gray-500 italic">No definida</span>
           <?php endif; ?>
         </p>
-        
+
         <p class="mb-2"><strong>Fecha fin:</strong>
           <?php if ($task->fecha_fin && $task->fecha_fin !== ''): ?>
             <?= date('d/m/Y H:i', strtotime($task->fecha_fin)) ?>
@@ -50,33 +51,36 @@
             <span class="text-gray-500 italic">No definida</span>
           <?php endif; ?>
         </p>
-        
+
         <p class="mb-4"><strong>Usuario:</strong> Usuario #<?= htmlspecialchars($task->usuario_id) ?></p>
 
-        
+
 
         <div class="flex space-x-3">
-          <a href="/tasks/edit?id=<?= $task->id_tarea ?>"
-             class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">
+          <button type="button" class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+            onclick="history.back()"
+            class="px-4 py-2 text-gray-600 border border-gray-300 rounded-md hover:bg-gray-50">
+            Volver
+          </button>
+          <a href="../tasks/edit?id=<?= $task->id_tarea ?>"
+            class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">
             Editar
           </a>
-          <a href="/tasks/delete?id=<?= $task->id_tarea ?>"
-             class="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600">
+          <a href="../tasks/delete?id=<?= $task->id_tarea ?>"
+            class="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600">
             Eliminar
           </a>
-          <a href="/tasks"
-             class="px-4 py-2 border text-gray-700 rounded hover:bg-gray-50">
-            Volver
-          </a>
+
         </div>
       </div>
     <?php else: ?>
       <div class="bg-red-100 text-red-700 p-6 rounded text-center">
         <h2 class="font-bold mb-2">Error: Tarea no encontrada</h2>
         <p>La tarea con ID <?= htmlspecialchars($id_tarea ?? '–') ?> no existe.</p>
-        <a href="/tasks" class="text-blue-600 underline mt-4 inline-block">← Volver al listado</a>
+        <a href="tasks" class="text-blue-600 underline mt-4 inline-block">← Volver al listado</a>
       </div>
     <?php endif; ?>
   </div>
 </body>
+
 </html>
