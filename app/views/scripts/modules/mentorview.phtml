@@ -2,8 +2,8 @@
 <html lang="es">
 
 <head>
-  <meta charset="UTF-8">
-  <title>To-do</title>
+  <meta charset="UTF-8" />
+  <title>Listado de alumnos</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.2/Sortable.min.js"></script>
 </head>
@@ -22,10 +22,12 @@
 
   <h1 class="text-3xl font-extrabold mb-4 text-indigo-700 drop-shadow z-10">Lista de alumnos</h1>
 
-  <div class="w-full max-w-6xl mb-6 z-10 text-right">
+  <!-- Select para ordenación -->
+  <div class="w-full max-w-6xl mb-6 z-10 text-right pr-4 md:pr-0">
     <label for="ordenar" class="text-sm font-medium text-indigo-700 mr-2">Ordenar por:</label>
     <select id="ordenar"
       class="bg-white border border-indigo-300 rounded px-3 py-1 text-sm text-indigo-700 shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-400">
+      <option value="id" selected>Nº Alumno</option>
       <option value="nombre">Nombre (A-Z)</option>
       <option value="email">Email (A-Z)</option>
     </select>
@@ -34,44 +36,56 @@
   <?php $usuarios = $this->usuarios ?? []; ?>
 
   <?php if (!empty($usuarios)): ?>
-    <form method="POST" action="eliminaralumnos" id="formAlumnos" class="relative w-full max-w-6xl">
-      <div class="bg-white p-8 rounded-2xl shadow-2xl border border-indigo-200 z-10">
-        <div id="usuarios" class="flex flex-wrap gap-6 justify-center">
+    <form method="POST" action="eliminaralumnos" id="formAlumnos" class="relative w-full max-w-6xl z-10">
+      <div id="contenedorTarjetas" class="bg-white p-6 rounded-2xl shadow-2xl border border-indigo-200 overflow-auto"
+        style="max-height: 70vh;">
+        <div id="usuarios" class="flex flex-wrap gap-5 justify-center">
           <?php foreach ($usuarios as $u): ?>
-            <label class="relative group rounded-xl p-6 w-full sm:w-1/2 md:w-1/3 lg:w-1/4 xl:w-1/5 transition-transform duration-200 hover:scale-105 cursor-pointer bg-gradient-to-br from-indigo-500 via-indigo-600 to-indigo-700 hover:from-black hover:to-black shadow-md flex flex-col items-center gap-2">
-              <input type="checkbox"
-                name="seleccionados[]"
-                value="<?= $u['id'] ?>"
+            <div
+              class="relative group rounded-xl p-4 w-full sm:w-1/3 md:w-1/4 lg:w-1/5 transition-transform duration-200 hover:scale-105 cursor-pointer bg-gradient-to-br from-indigo-500 via-indigo-600 to-indigo-700 hover:from-black hover:to-black shadow-md flex flex-col items-center gap-2">
+
+              <input type="checkbox" name="seleccionados[]" value="<?= $u['id'] ?>"
                 class="absolute top-3 left-3 h-5 w-5 text-indigo-600 bg-white rounded focus:ring-0 focus:ring-offset-0" />
 
-              <div class="flex items-center justify-center w-12 h-12 mb-2 rounded-full bg-indigo-200 text-indigo-800 text-2xl font-extrabold">
-                <?= mb_substr(htmlspecialchars($u['nombre']), 0, 1) ?>
-              </div>
+              <a href="<?= WEB_ROOT . '/usuarios/' . $u['id'] ?>"
+                class="flex flex-col items-center gap-2 w-full h-full pt-6 text-white no-underline hover:underline">
 
-              <p class="font-semibold text-lg text-white"><?= htmlspecialchars($u['nombre']) ?></p>
+                <div class="flex items-center justify-center w-10 h-10 rounded-full bg-indigo-200 text-indigo-800 text-base font-bold mb-2 select-none">
+                  <?= htmlspecialchars($u['id']) ?>
+                </div>
 
-              <p class="text-xs text-indigo-100"><?= htmlspecialchars($u['email']) ?></p>
-            </label>
+                <p class="font-semibold text-lg"><?= htmlspecialchars($u['nombre']) ?></p>
+
+                <p class="text-xs"><?= htmlspecialchars($u['email']) ?></p>
+
+              </a>
+            </div>
           <?php endforeach; ?>
         </div>
       </div>
 
-      <div class="fixed bottom-8 right-8 z-50">
-        <button type="button"
-          class="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-6 rounded shadow disabled:opacity-50 disabled:cursor-not-allowed"
-          id="btnEliminar"
-          disabled>
-          Eliminar
-        </button>
-      </div>
+      <!-- Contenedor botones debajo, distribuidos horizontalmente -->
+      <div class="mt-6 flex justify-between max-w-6xl w-full space-x-4">
+        <a href="tasks/create"
+          class="flex-1 bg-green-600 hover:bg-green-700 text-white font-bold py-3 rounded shadow text-center whitespace-normal break-words">
+          Crear Tarea
+        </a>
 
-      <div class="fixed bottom-8 left-8 z-50">
-        <button type="submit"
-          formaction="modificaralumnos"
-          class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-6 rounded shadow disabled:opacity-50 disabled:cursor-not-allowed"
-          id="btnModificar"
-          disabled>
-          Modificar
+        <a href="tasks"
+          class="flex-1 bg-green-600 hover:bg-green-700 text-white font-bold py-3 rounded shadow text-center whitespace-normal break-words">
+          Ver Todas las tareas
+        </a>
+
+        <button type="submit" formaction="modificaralumnos" form="formAlumnos"
+          class="flex-1 bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 rounded shadow disabled:opacity-50 disabled:cursor-not-allowed whitespace-normal break-words"
+          id="btnModificar" disabled>
+          Modificar Alumno/s
+        </button>
+
+        <button type="button"
+          class="flex-1 bg-red-600 hover:bg-red-700 text-white font-bold py-3 rounded shadow disabled:opacity-50 disabled:cursor-not-allowed whitespace-normal break-words"
+          id="btnEliminar" disabled>
+          Eliminar Alumno/s
         </button>
       </div>
     </form>
@@ -79,6 +93,7 @@
     <p class="text-gray-700 z-10">No hay alumnos.</p>
   <?php endif; ?>
 
+  <!-- Modal confirmación para eliminación -->
   <div id="confirmModal" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden items-center justify-center">
     <div class="bg-white rounded-lg p-6 max-w-sm w-full shadow-xl text-center">
       <h2 class="text-xl font-semibold text-red-600 mb-4">¡Atención!</h2>
@@ -93,64 +108,78 @@
   </div>
 
   <script>
-    console.log("Script cargado");
+    window.addEventListener('DOMContentLoaded', () => {
+      console.log("Script cargado");
 
-    Sortable.create(document.getElementById('usuarios'), {
-      animation: 150
-    });
-
-    const btnEliminar = document.getElementById('btnEliminar');
-    const btnModificar = document.getElementById('btnModificar');
-    const form = document.getElementById('formAlumnos');
-    const checkboxes = document.querySelectorAll('input[type="checkbox"][name="seleccionados[]"]');
-
-    checkboxes.forEach(c => {
-      c.addEventListener('change', () => {
-        const algunoSeleccionado = Array.from(checkboxes).some(ch => ch.checked);
-        btnEliminar.disabled = !algunoSeleccionado;
-        btnModificar.disabled = !algunoSeleccionado;
-      });
-    });
-
-    const modal = document.getElementById('confirmModal');
-    const confirmYes = document.getElementById('confirmYes');
-    const confirmNo = document.getElementById('confirmNo');
-
-    btnEliminar.addEventListener('click', () => {
-      console.log("Eliminar pulsado");
-      modal.classList.remove('hidden');
-      modal.classList.add('flex');
-      document.body.classList.add('overflow-hidden');
-    });
-
-    confirmYes.addEventListener('click', () => {
-      console.log("Confirmación: enviando formulario");
-      document.body.classList.remove('overflow-hidden');
-      modal.classList.add('hidden');
-      form.submit();
-    });
-
-    confirmNo.addEventListener('click', () => {
-      console.log("Cancelado");
-      document.body.classList.remove('overflow-hidden');
-      modal.classList.add('hidden');
-    });
-
-    const cardsContainer = document.getElementById('usuarios');
-    const selectOrden = document.getElementById('ordenar');
-
-    selectOrden.addEventListener('change', function() {
-      const criterio = this.value;
-      const cards = Array.from(cardsContainer.children);
-
-      cards.sort((a, b) => {
-        const getText = (el, selector) => el.querySelector(selector)?.textContent?.toLowerCase()?.trim() || '';
-        const aTexto = getText(a, criterio === 'nombre' ? 'p.font-semibold' : 'p.text-xs');
-        const bTexto = getText(b, criterio === 'nombre' ? 'p.font-semibold' : 'p.text-xs');
-        return aTexto.localeCompare(bTexto);
+      Sortable.create(document.getElementById('usuarios'), {
+        animation: 150
       });
 
-      cards.forEach(card => cardsContainer.appendChild(card));
+      const btnEliminar = document.getElementById('btnEliminar');
+      const btnModificar = document.getElementById('btnModificar');
+      const form = document.getElementById('formAlumnos');
+      const checkboxes = document.querySelectorAll('input[type="checkbox"][name="seleccionados[]"]');
+
+      checkboxes.forEach(c => {
+        c.addEventListener('change', () => {
+          const algunoSeleccionado = Array.from(checkboxes).some(ch => ch.checked);
+          btnEliminar.disabled = !algunoSeleccionado;
+          btnModificar.disabled = !algunoSeleccionado;
+        });
+      });
+
+      const modal = document.getElementById('confirmModal');
+      const confirmYes = document.getElementById('confirmYes');
+      const confirmNo = document.getElementById('confirmNo');
+
+      btnEliminar.addEventListener('click', () => {
+        console.log("Eliminar pulsado");
+        modal.classList.remove('hidden');
+        modal.classList.add('flex');
+        document.body.classList.add('overflow-hidden');
+      });
+
+      confirmYes.addEventListener('click', () => {
+        console.log("Confirmación: enviando formulario");
+        document.body.classList.remove('overflow-hidden');
+        modal.classList.add('hidden');
+        form.submit();
+      });
+
+      confirmNo.addEventListener('click', () => {
+        console.log("Cancelado");
+        document.body.classList.remove('overflow-hidden');
+        modal.classList.add('hidden');
+      });
+
+      const cardsContainer = document.getElementById('usuarios');
+      const selectOrden = document.getElementById('ordenar');
+
+      // Ordenar por defecto ID
+      const ordenarTarjetas = (criterio) => {
+        const cards = Array.from(cardsContainer.children);
+
+        cards.sort((a, b) => {
+          if (criterio === 'id') {
+            const aId = parseInt(a.querySelector('div.w-10')?.textContent.trim() || '0', 10);
+            const bId = parseInt(b.querySelector('div.w-10')?.textContent.trim() || '0', 10);
+            return aId - bId;
+          } else {
+            const selector = (criterio === 'nombre') ? 'p.font-semibold' : 'p.text-xs';
+            const aTexto = a.querySelector(selector)?.textContent.toLowerCase().trim() || '';
+            const bTexto = b.querySelector(selector)?.textContent.toLowerCase().trim() || '';
+            return aTexto.localeCompare(bTexto);
+          }
+        });
+
+        cards.forEach(card => cardsContainer.appendChild(card));
+      }
+
+      ordenarTarjetas('id');
+
+      selectOrden.addEventListener('change', function () {
+        ordenarTarjetas(this.value);
+      });
     });
   </script>
 

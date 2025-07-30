@@ -11,7 +11,9 @@
  */
 $routes = array(
 	'/test' => 'test#index',
+
 	//Rutas para gestion de tareas (TaskController)
+	//'/' => 'task#index',
 	'/tasks' => 'task#index',
 	'/tasks/create' => 'task#create',
 	'/tasks/show' => 'task#show',
@@ -23,5 +25,7 @@ $routes = array(
 	'/guardaralumno' => 'usuario#crear',
 	'/eliminaralumnos' => 'usuario#eliminarvarios',
 	'/modificaralumnos' => 'usuario#editarvarios',
-	'/guardaractualizaciones' => 'usuario#actualizarvarios'
+	'/guardaractualizaciones' => 'usuario#actualizarvarios',
+	'/usuarios/:id' => 'usuario#tareas',
+	'/usuarios' => 'usuario#obtenerTodos',
 );

@@ -1,38 +1,44 @@
-{
-    "35": {
-        "nombre": "Fernando Gonz\u00e1lez Martinez",
-        "email": "fer.gon@mailto.de",
-        "password": "873u9hdunioed",
-        "id": 36
+[
+    {
+        "nombre": "Turanga Leela",
+        "email": "turanga.leela@futurama.tv",
+        "password": "pass101",
+        "id": 101
     },
-    "36": {
-        "nombre": "Marcos Olegario Fern\u00e1ndez",
-        "email": "aolegario@ubu.edu.es.fr",
-        "password": "oicrjienomc",
-        "id": 37
+    {
+        "nombre": "Bender Bending Rodr\u00edguez",
+        "email": "bender.bending.rodr\u00edguez@futurama.tv",
+        "password": "pass102",
+        "id": 102
     },
-    "38": {
-        "nombre": "Gustavo Liuzzi",
-        "email": "gustavo@gmail.com",
-        "password": "y7fh548h9f45",
-        "id": 39
+    {
+        "nombre": "Professor Farnsworth",
+        "email": "professor.farnsworth@futurama.tv",
+        "password": "pass103",
+        "id": 103
     },
-    "42": {
-        "nombre": "Romina Paola Liuzzi",
-        "email": "rliuzzi@gmail.com",
-        "password": "e783",
-        "id": 43
+    {
+        "nombre": "Amy Wong",
+        "email": "amy.wong@futurama.tv",
+        "password": "pass104",
+        "id": 104
     },
-    "43": {
-        "nombre": "Mario Vazquez",
-        "email": "mv@gm.com",
-        "password": "j89383489",
-        "id": 44
+    {
+        "nombre": "Zoidberg",
+        "email": "zoidberg@futurama.tv",
+        "password": "pass106",
+        "id": 106
     },
-    "44": {
-        "nombre": "Martin Ramirez",
-        "email": "mramirez@t-mail.es",
-        "password": "jhi8d30\u00b7(\/\/\u00b7)",
-        "id": 45
+    {
+        "nombre": "Kif Kroker",
+        "email": "kif.kroker@futurama.tv",
+        "password": "pass108",
+        "id": 108
+    },
+    {
+        "nombre": "Mom",
+        "email": "mom@futurama.tv",
+        "password": "pass109",
+        "id": 109
     }
-}
+]
