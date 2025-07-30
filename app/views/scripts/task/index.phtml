@@ -6,40 +6,56 @@
     <title>Lista de Tareas</title>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="bg-gray-100 min-h-screen py-8">
-    <div class="max-w-4xl mx-auto px-4">
+<body class="bg-gray-100 min-h-screen flex flex-col items-center p-6">
+
+  <div class="fixed top-0 left-0 w-full h-full bg-cover bg-center blur-md opacity-[0.85] -z-10"
+    style="background-image: url('images/fondo.png')"></div>
+    <div class="max-w-4xl mx-auto px-4 py-8">
         
         <!-- Header -->
         <div class="mb-6 text-center">
-            <h1 class="text-3xl font-bold text-gray-800">Mis Tareas</h1>
+            <h1 class="text-3xl font-bold text-gray-800">Tareas Abiertas</h1>
         </div>
 
         <!-- Mensaje -->
-        <?php if (isset($message)): ?>
-            <div class="bg-green-100 text-green-700 p-3 rounded mb-4">
-                <?= htmlspecialchars($message) ?>
-            </div>
-        <?php endif; ?>
+<?php if (!empty($_GET['message'])): ?>
+    <div id="flashMessage"
+         class="fixed top-4 left-1/2 transform -translate-x-1/2 bg-green-100 text-green-800 border border-green-300 rounded px-4 py-3 shadow z-50 max-w-lg text-center">
+        <?= htmlspecialchars($_GET['message']) ?>
+    </div>
+
+    <script>
+        window.addEventListener('DOMContentLoaded', () => {
+            const flash = document.getElementById('flashMessage');
+            if (flash) {
+                setTimeout(() => {
+                    flash.style.transition = 'opacity 0.5s ease';
+                    flash.style.opacity = '0';
+                    setTimeout(() => flash.remove(), 500);
+                }, 3000);
+            }
+        });
+    </script>
+<?php endif; ?>
 
         <!-- Botón crear -->
         <div class="mb-4 text-right">
-            <a href="/tasks/create" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
+            <a href="tasks/create" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
                 Nueva Tarea
             </a>
         </div>
 
         <?php if (count($this->tasks) == 0): ?>
-            <?php var_dump($this->tasks); ?>
             <!-- Sin tareas -->
             <div class="bg-white p-8 rounded text-center shadow">
                 <h3 class="text-xl mb-2">No hay tareas</h3>
-                <a href="/tasks/create" class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">
+                <a href="tasks/create" class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">
                     Crear primera tarea
                 </a>
             </div>
         <?php else: ?>
             <!-- Lista de tareas -->
-            <div class="bg-white rounded shadow overflow-hidden">
+            <div class="bg-white rounded-xl shadow overflow-hidden">
                 <table class="w-full">
                     <thead class="bg-gray-50">
                         <tr>
@@ -47,6 +63,7 @@
                             <th class="p-3 text-left">Tarea</th>
                             <th class="p-3 text-left">Estado</th>
                             <th class="p-3 text-left">Acciones</th>
+                            <th class="p-3 text-left">Alumno</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -75,10 +92,18 @@
                                     </span>
                                 </td>
                                 <td class="p-3">
-                                    <a href="/tasks/show?id=<?= $task->id_tarea ?>" class="text-blue-500 mr-2" title="Ver">Ver</a>
-                                    <a href="/tasks/edit?id=<?= $task->id_tarea ?>" class="text-yellow-500 mr-2" title="Editar">Editar</a>
-                                    <a href="/tasks/delete?id=<?= $task->id_tarea ?>" class="text-red-600 hover:text-red-800 text-sm" title="Eliminar">Eliminar</a>
+                                    <a href="tasks/show?id=<?= $task->id_tarea ?>" class="text-blue-500 mr-2" title="Ver">Ver</a>
+                                    <a href="tasks/edit?id=<?= $task->id_tarea ?>" class="text-yellow-500 mr-2" title="Editar">Editar</a>
+                                    <a href="tasks/delete?id=<?= $task->id_tarea ?>" class="text-red-600 hover:text-red-800 text-sm" title="Eliminar">Eliminar</a>
                                 </td>
+                                <td class="p-3">
+                                    <?php if ($task->usuario_id): ?>
+                                        <a href="usuarios/<?= $task->usuario_id ?>" class="text-indigo-500">
+                                            Alumno #<?= htmlspecialchars($task->usuario_id) ?>
+                                        </a>
+                                    <?php else: ?>
+                                        <span class="text-gray-500">Sin asignar</span>
+                                    <?php endif; ?>
                             </tr>
                         <?php endforeach; ?>
                     </tbody>

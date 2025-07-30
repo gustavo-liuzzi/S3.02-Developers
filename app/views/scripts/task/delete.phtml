@@ -1,17 +1,18 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Eliminar Tarea</title>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
+
 <body class="bg-gray-100 min-h-screen py-8">
     <div class="max-w-2xl mx-auto px-4">
-        
-        <?php 
+
+        <?php
         // Obtener tarea directamente (mismo patrón que edit y show)
-        require_once __DIR__ . '/../../../models/Task.php';
         $id_tarea = $_GET['id'] ?? null;
         $task = $id_tarea ? Task::findById($id_tarea) : null;
         ?>
@@ -27,7 +28,7 @@
                 <!-- Información de la tarea -->
                 <div class="mb-6">
                     <p class="mb-3">¿Estás seguro de que quieres eliminar esta tarea?</p>
-                    
+
                     <div class="bg-gray-50 p-4 rounded">
                         <p><strong>ID:</strong> #<?= $task->id_tarea ?></p>
                         <p><strong>Título:</strong> <?= htmlspecialchars($task->titulo) ?></p>
@@ -51,7 +52,7 @@
                 </div>
 
                 <!-- Formulario -->
-                <form method="POST" action="/tasks/delete?id=<?= $task->id_tarea ?>">
+                <form method="POST" action="../tasks/delete">
                     <input type="hidden" name="id_tarea" value="<?= $task->id_tarea ?>">
                     <input type="hidden" name="confirm_delete" value="1">
 
@@ -65,9 +66,11 @@
 
                     <!-- Botones -->
                     <div class="flex space-x-3">
-                        <a href="/tasks" class="px-4 py-2 border text-gray-700 rounded hover:bg-gray-50">
+                        <button type="button"
+                            onclick="history.back()"
+                            class="px-4 py-2 text-gray-600 border border-gray-700 rounded-md hover:bg-gray-50">
                             Cancelar
-                        </a>
+                        </button>
                         <button type="submit" class="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700">
                             Eliminar
                         </button>
@@ -85,4 +88,5 @@
         <?php endif; ?>
     </div>
 </body>
+
 </html>
