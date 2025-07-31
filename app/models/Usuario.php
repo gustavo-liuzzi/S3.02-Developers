@@ -27,19 +27,9 @@ class Usuario extends Model
         return null;
     }
 
-    /* añado función para comprobar si el usuario (email) ya existe
-    pero no funciona, a pesar de ser llamada desde UsuarioController
-    correctamente, a investigar por qué */
-
     public function guardarUsuario(array $data): int
     {
         $usuarios = $this->jsonHandler->leer();
-
-        foreach ($usuarios as $usuario) {
-            if (isset($usuario['email']) && strtolower($usuario['email']) === strtolower($data['email'])) {
-                throw new Exception("Error: El usuario ya existe");
-            }
-        }
 
         if (count($usuarios) > 0) {
             $ultimoId = end($usuarios)['id'];
@@ -48,9 +38,13 @@ class Usuario extends Model
             $data['id'] = 1;
         }
 
+        foreach ($usuarios as $usuario) {
+            if (($usuario['email']) === $data['email']) {
+                return 0;
+            }
+        }
         $usuarios[] = $data;
         $this->jsonHandler->guardar($usuarios);
-
         return $data['id'];
     }
 
@@ -100,5 +94,13 @@ class Usuario extends Model
             $this->jsonHandler->guardar($usuarios);
         }
         return $borrado;
+    }
+
+    public function borrarVarios(array $ids): bool
+    {
+        $usuarios = $this->jsonHandler->leer();
+        $usuariosFiltrados = array_filter($usuarios, fn($usuario) => !in_array((int)$usuario['id'], $ids));
+        $this->jsonHandler->guardar(array_values($usuariosFiltrados));
+        return true;
     }
 }

@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8" />
+  <title>Aplicación 2-do</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<?php if (!empty($_SESSION['flash_message'])): ?>
+  <div id="flashMessage" class="fixed top-4 left-1/2 transform -translate-x-1/2 z-50 max-w-md bg-green-100 border border-green-300 text-green-800 px-6 py-3 rounded shadow text-center">
+    <?= htmlspecialchars($_SESSION['flash_message']); ?>
+  </div>
+  <?php unset($_SESSION['flash_message']); ?>
+<?php endif; ?>
+
+<body class="bg-gray-100 min-h-screen flex flex-col items-center p-6">
+
+  <div class="fixed top-0 left-0 w-full h-full bg-cover bg-center blur-md opacity-[0.85] -z-10"
+    style="background-image: url('images/fondo.png')"></div>
+
+  <div class="w-full max-w-md bg-white p-8 rounded-2xl shadow-2xl border border-indigo-200 text-center mt-12">
+
+    <h1 class="text-2xl font-extrabold text-indigo-700 mb-2">¡Bienvenid@! 👋</h1>
+    <p class="text-gray-600 mb-6 text-sm">
+      Tu herramienta personalizada para gestionar todas las tareas del bootcamp.
+    </p>
+
+    <a href="login" class="block w-full bg-blue-700 hover:bg-blue-900 text-white py-2 rounded mb-3 transition">
+      Iniciar Sesión
+    </a>
+    <a href="modules" class="block w-full bg-blue-700 hover:bg-blue-900 text-white py-2 rounded transition">
+      Acceso Mentores
+    </a>
+
+  </div>
+
+  <button id="toggleFormBtn"
+    class="fixed bottom-6 left-6 bg-indigo-600 hover:bg-indigo-800 text-white px-4 py-2 rounded shadow">
+    Nuevo Alumno
+  </button>
+
+  <div id="formSection"
+    class="hidden fixed bottom-24 left-6 bg-white border-2 border-indigo-600 p-5 rounded-xl w-72 shadow-xl z-20">
+    <h2 class="text-lg font-bold text-indigo-800 mb-4">Alta de alumno</h2>
+    <form action="guardaralumno" method="POST" class="flex flex-col gap-3 text-sm text-gray-700">
+      <input name="nombre" type="text" placeholder="Nombre y apellidos"
+        class="border px-3 py-2 rounded focus:outline-none focus:ring-2 focus:ring-indigo-400" required>
+      <input name="email" type="email" placeholder="Correo electrónico"
+        class="border px-3 py-2 rounded focus:outline-none focus:ring-2 focus:ring-indigo-400" required>
+      <input name="password" type="password" placeholder="Contraseña"
+        class="border px-3 py-2 rounded focus:outline-none focus:ring-2 focus:ring-indigo-400" required>
+      <button type="submit"
+        class="bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-2 rounded transition">
+        Enviar
+      </button>
+    </form>
+  </div>
+
+  <script>
+    document.getElementById('toggleFormBtn').addEventListener('click', () => {
+      document.getElementById('formSection').classList.toggle('hidden');
+    });
+
+    window.addEventListener('DOMContentLoaded', () => {
+      const flash = document.getElementById('flashMessage');
+      if (flash) {
+        setTimeout(() => {
+          flash.style.transition = 'opacity 0.5s ease';
+          flash.style.opacity = '0';
+          setTimeout(() => flash.remove(), 500);
+        }, 3000);
+      }
+    });
+  </script>
+
+</body>
+
+</html>

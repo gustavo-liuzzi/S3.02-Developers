@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eliminar Tarea</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-gray-100 min-h-screen py-8">
+    <div class="max-w-2xl mx-auto px-4">
+
+        <?php
+        // Obtener tarea directamente (mismo patrón que edit y show)
+        $id_tarea = $_GET['id'] ?? null;
+        $task = $id_tarea ? Task::findById($id_tarea) : null;
+        ?>
+
+        <?php if ($task): ?>
+            <div class="bg-white rounded shadow p-6">
+                <!-- Header -->
+                <div class="mb-4 p-4 bg-red-50 rounded">
+                    <h1 class="text-xl font-bold text-red-800"> Confirmar Eliminación</h1>
+                    <p class="text-red-600 text-sm">Esta acción no se puede deshacer</p>
+                </div>
+
+                <!-- Información de la tarea -->
+                <div class="mb-6">
+                    <p class="mb-3">¿Estás seguro de que quieres eliminar esta tarea?</p>
+
+                    <div class="bg-gray-50 p-4 rounded">
+                        <p><strong>ID:</strong> #<?= $task->id_tarea ?></p>
+                        <p><strong>Título:</strong> <?= htmlspecialchars($task->titulo) ?></p>
+                        <?php if ($task->descripcion): ?>
+                            <p><strong>Descripción:</strong> <?= htmlspecialchars(substr($task->descripcion, 0, 100)) ?><?= strlen($task->descripcion) > 100 ? '...' : '' ?></p>
+                        <?php endif; ?>
+                        <p><strong>Estado:</strong>
+                            <?php
+                            $colors = [
+                                'pendiente' => 'bg-yellow-200 text-yellow-800',
+                                'en ejecucion' => 'bg-blue-200 text-blue-800',
+                                'completada' => 'bg-green-200 text-green-800'
+                            ];
+                            $cls = $colors[$task->estado->value] ?? 'bg-gray-200 text-gray-800';
+                            ?>
+                            <span class="px-2 py-1 rounded text-xs <?= $cls ?>">
+                                <?= ucfirst(str_replace('_', ' ', $task->estado->value)) ?>
+                            </span>
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Formulario -->
+                <form method="POST" action="../tasks/delete">
+                    <input type="hidden" name="id_tarea" value="<?= $task->id_tarea ?>">
+                    <input type="hidden" name="confirm_delete" value="1">
+
+                    <!-- Checkbox confirmación -->
+                    <div class="mb-4">
+                        <label class="flex items-center">
+                            <input type="checkbox" name="confirm_checkbox" class="mr-2" required>
+                            <span>Confirmo que quiero eliminar esta tarea</span>
+                        </label>
+                    </div>
+
+                    <!-- Botones -->
+                    <div class="flex space-x-3">
+                        <button type="button"
+                            onclick="history.back()"
+                            class="px-4 py-2 text-gray-600 border border-gray-700 rounded-md hover:bg-gray-50">
+                            Cancelar
+                        </button>
+                        <button type="submit" class="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700">
+                            Eliminar
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+        <?php else: ?>
+            <!-- Tarea no encontrada -->
+            <div class="bg-red-100 text-red-700 p-6 rounded text-center">
+                <h2 class="font-bold mb-2">Error: Tarea no encontrada</h2>
+                <p>La tarea que intentas eliminar no existe.</p>
+                <a href="/tasks" class="text-blue-600 underline mt-4 inline-block">← Volver al listado</a>
+            </div>
+        <?php endif; ?>
+    </div>
+</body>
+
+</html>
