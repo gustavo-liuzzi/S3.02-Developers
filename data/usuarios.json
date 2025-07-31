@@ -1,0 +1,50 @@
+[
+    {
+        "nombre": "Turanga Leela",
+        "email": "turanga.leela@futurama.tv",
+        "password": "pass101",
+        "id": 101
+    },
+    {
+        "nombre": "Bender Bending Rodr\u00edguez",
+        "email": "bender.bending.rodr\u00edguez@futurama.tv",
+        "password": "pass102",
+        "id": 102
+    },
+    {
+        "nombre": "Professor Farnsworth",
+        "email": "professor.farnsworth@futurama.tv",
+        "password": "pass103",
+        "id": 103
+    },
+    {
+        "nombre": "Amy Wong",
+        "email": "amy.wong@futurama.tv",
+        "password": "pass104",
+        "id": 104
+    },
+    {
+        "nombre": "Zoidberg",
+        "email": "zoidberg@futurama.tv",
+        "password": "pass106",
+        "id": 106
+    },
+    {
+        "nombre": "Kif Kroker",
+        "email": "kif.kroker@futurama.tv",
+        "password": "pass108",
+        "id": 108
+    },
+    {
+        "nombre": "Mom",
+        "email": "mom@futurama.tv",
+        "password": "pass109",
+        "id": 109
+    },
+    {
+        "nombre": "Gustavo",
+        "email": "gustavo.liuzzi@gmail.com",
+        "password": "dedew",
+        "id": 110
+    }
+]
