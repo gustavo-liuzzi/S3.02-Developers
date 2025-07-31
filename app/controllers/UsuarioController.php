@@ -24,10 +24,10 @@ class UsuarioController extends Controller
         $data = $this->_getAllParams();
         $resultado = $this->usuarioModel->guardarUsuario($data);
 
-        if ($resultado) {
+        if ($resultado > 0) {
             $this->redirectWithMessage(WEB_ROOT . "/", "Usuario creado correctamente con ID: " . $resultado);
         } else {
-            $this->redirectWithMessage(WEB_ROOT . "/", "Error al guardar el usuario.");
+            $this->redirectWithMessage(WEB_ROOT . "/", "Error: El email ya se encuentra registrado.");
         }
     }
 

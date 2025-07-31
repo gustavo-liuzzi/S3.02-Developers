@@ -24,7 +24,7 @@ class Usuario extends Model
                 return $usuario;
             }
         }
-        return null; 
+        return null;
     }
 
     public function guardarUsuario(array $data): int
@@ -38,9 +38,13 @@ class Usuario extends Model
             $data['id'] = 1;
         }
 
+        foreach ($usuarios as $usuario) {
+            if (($usuario['email']) === $data['email']) {
+                return 0;
+            }
+        }
         $usuarios[] = $data;
         $this->jsonHandler->guardar($usuarios);
-
         return $data['id'];
     }
 
@@ -93,10 +97,10 @@ class Usuario extends Model
     }
 
     public function borrarVarios(array $ids): bool
-{
-    $usuarios = $this->jsonHandler->leer();
-    $usuariosFiltrados = array_filter($usuarios, fn($usuario) => !in_array((int)$usuario['id'], $ids));
-    $this->jsonHandler->guardar(array_values($usuariosFiltrados));
-    return true;
-}
+    {
+        $usuarios = $this->jsonHandler->leer();
+        $usuariosFiltrados = array_filter($usuarios, fn($usuario) => !in_array((int)$usuario['id'], $ids));
+        $this->jsonHandler->guardar(array_values($usuariosFiltrados));
+        return true;
+    }
 }

@@ -40,5 +40,11 @@
         "email": "mom@futurama.tv",
         "password": "pass109",
         "id": 109
+    },
+    {
+        "nombre": "Gustavo",
+        "email": "gustavo.liuzzi@gmail.com",
+        "password": "dedew",
+        "id": 110
     }
 ]

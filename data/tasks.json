@@ -288,57 +288,12 @@
         "usuario_id": "108"
     },
     {
-        "id_tarea": 69,
-        "titulo": "D\u00eda libre en el siglo XXXI",
-        "descripcion": "Tarea futurista: d\u00eda libre en el siglo xxxi.",
+        "id_tarea": 67,
+        "titulo": "Prueba de duplicaci\u00f3n de e-mail",
+        "descripcion": "Arreglado!",
         "estado": "finalizada",
-        "fecha_inicio": "2025-07-29T20:00",
-        "fecha_fin": "2025-08-02T20:00",
-        "usuario_id": "101"
-    },
-    {
-        "id_tarea": 70,
-        "titulo": "Probar rayos de la muerte",
-        "descripcion": "deded",
-        "estado": "pendiente",
         "fecha_inicio": "",
         "fecha_fin": "",
-        "usuario_id": "101"
-    },
-    {
-        "id_tarea": 71,
-        "titulo": "deqde",
-        "descripcion": "",
-        "estado": "en ejecucion",
-        "fecha_inicio": "",
-        "fecha_fin": "",
-        "usuario_id": "101"
-    },
-    {
-        "id_tarea": 72,
-        "titulo": "Probar rayos de la muerte",
-        "descripcion": "zzwzw",
-        "estado": "pendiente",
-        "fecha_inicio": "",
-        "fecha_fin": "",
-        "usuario_id": 106
-    },
-    {
-        "id_tarea": 74,
-        "titulo": "d2ewdw",
-        "descripcion": "dwdwededwed",
-        "estado": "pendiente",
-        "fecha_inicio": "",
-        "fecha_fin": "",
-        "usuario_id": "104"
-    },
-    {
-        "id_tarea": 75,
-        "titulo": "Revisi\u00f3n de c\u00f3digo con Francesc",
-        "descripcion": "",
-        "estado": "pendiente",
-        "fecha_inicio": "",
-        "fecha_fin": "",
-        "usuario_id": 101
+        "usuario_id": 110
     }
 ]
