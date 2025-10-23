@@ -2,27 +2,37 @@ Aplicación de Gestión de Tareas
 Descripción del Proyecto
 Una aplicación de gestión de tareas que utiliza el patrón MVC con funciones de inicio de sesión, filtrado y etiquetado de usuarios.
 
-Características
+Características:
+
 Autenticación de usuarios (inicio de sesión)
+
 Creación, edición y eliminación de tareas y usuarios
+
 Filtrado de tareas (por estado y tipo)
+
 Etiquetado de tareas para la organización
-Arquitectura
+
+Arquitectura:
+
 Usando el patrón Modelo-Vista-Controlador (MVC).
 
 app controladores modelos vistas configuración biblioteca base web
 
-Instalación
+Instalación:
+
 Clonar el repositorio.
+
 Instalar dependencias (npm install)
+
 Configurar variables de entorno
-Uso
+Uso:
+
 Iniciar la aplicación
 Ir a http://localhost:8000 en su navegador
-Iniciar sesión, crear una tarea, aplicar filtros o añadir etiquetas.
-Tecnologías utilizadas
+Iniciar sesión, crear un usuario y crear tareas.
+
+
+Tecnologías utilizadas:
 Backend: [PHP]
 Frontend: [TailwindCSS]
 Base de datos: [JSON]
-Licencia
-Este proyecto es de código abierto y está licenciado bajo la Licencia MIT.
